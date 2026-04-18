@@ -54,6 +54,17 @@ init_environment() {
     export ANTHROPIC_CONFIG_DIR="$claude_config_dir"
     export ANTHROPIC_HOME="/data"
 
+    # Custom Anthropic API configuration (from add-on options)
+    if bashio::config.has_value 'anthropic_auth_token'; then
+        export ANTHROPIC_AUTH_TOKEN=$(bashio::config 'anthropic_auth_token')
+    fi
+    if bashio::config.has_value 'anthropic_base_url'; then
+        export ANTHROPIC_BASE_URL=$(bashio::config 'anthropic_base_url')
+    fi
+    if bashio::config.has_value 'anthropic_model'; then
+        export ANTHROPIC_MODEL=$(bashio::config 'anthropic_model')
+    fi
+
     # Disable auto-updates: binary is baked into the container image,
     # updates are delivered via add-on releases, not CLI self-update
     export DISABLE_AUTOUPDATER=1
@@ -99,6 +110,11 @@ export DISABLE_AUTOUPDATER=1
 
 # GitHub CLI persistent configuration
 export GH_CONFIG_DIR="/data/.config/gh"
+
+# Custom Anthropic API configuration (exported by run.sh at runtime)
+export ANTHROPIC_AUTH_TOKEN="${ANTHROPIC_AUTH_TOKEN:-}"
+export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-}"
+export ANTHROPIC_MODEL="${ANTHROPIC_MODEL:-}"
 
 # Persistent package paths and native Claude binary (HIGHEST PRIORITY)
 export PATH="/data/packages/bin:/data/packages/python/venv/bin:/data/home/.local/bin:$PATH"

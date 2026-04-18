@@ -40,6 +40,7 @@ options:
   anthropic_auth_token: ""
   anthropic_base_url: ""
   anthropic_model: ""
+  homeassistant_access_token: ""
 
 schema:
   auto_launch_claude: bool?
@@ -53,6 +54,7 @@ schema:
   anthropic_auth_token: str?
   anthropic_base_url: str?
   anthropic_model: str?
+  homeassistant_access_token: str?
 
 # Volume mappings for file access
 map:

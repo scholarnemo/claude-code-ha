@@ -65,6 +65,13 @@ init_environment() {
         export ANTHROPIC_MODEL=$(bashio::config 'anthropic_model')
     fi
 
+    # Home Assistant API token (from add-on options)
+    if bashio::config.has_value 'homeassistant_access_token'; then
+        export SUPERVISOR_TOKEN=$(bashio::config 'homeassistant_access_token')
+        export HASS_TOKEN=$(bashio::config 'homeassistant_access_token')
+        bashio::log.info "  - Home Assistant API token configured"
+    fi
+
     # Disable auto-updates: binary is baked into the container image,
     # updates are delivered via add-on releases, not CLI self-update
     export DISABLE_AUTOUPDATER=1
@@ -115,6 +122,8 @@ export GH_CONFIG_DIR="/data/.config/gh"
 export ANTHROPIC_AUTH_TOKEN="${ANTHROPIC_AUTH_TOKEN:-}"
 export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-}"
 export ANTHROPIC_MODEL="${ANTHROPIC_MODEL:-}"
+export SUPERVISOR_TOKEN="${SUPERVISOR_TOKEN:-}"
+export HASS_TOKEN="${HASS_TOKEN:-}"
 
 # Persistent package paths and native Claude binary (HIGHEST PRIORITY)
 export PATH="/data/packages/bin:/data/packages/python/venv/bin:/data/home/.local/bin:$PATH"
